@@ -2,7 +2,7 @@
  * Created by Tomer on 15/10/2016.
  */
 import React from 'react';
-import {Treebeard} from 'react-treebeard'
+import {Treebeard, decorators} from 'react-treebeard'
 import Style from '../style/treeViewStyle.js'
 
 const tempDataSource =
@@ -38,6 +38,25 @@ const tempDataSource =
 
     ;
 
+
+decorators.Header = function(props){
+
+    const style = props.style;
+
+    const iconStyle = { marginRight: '5px',
+                        verticalAlign : 'middle'};
+
+    var nodeType = props.node.children ? "folder" : "insert_drive_file" ;
+
+    return (
+            <div style={style.base}>
+                <div style={style.title}>
+                <i className="material-icons" style={iconStyle}>{nodeType}</i>
+                {props.node.name}
+                </div>
+                </div>);
+
+};
 export default class TreeView extends React.Component{
 
 constructor(props){
@@ -58,6 +77,7 @@ constructor(props){
                 data={tempDataSource}
                 onToggle={this.onToggle}
                 style={Style}
+                decorators={decorators}
                 />
         );
     }
