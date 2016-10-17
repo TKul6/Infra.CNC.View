@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Treebeard} from 'react-treebeard'
+import Style from '../style/treeViewStyle.js'
 
 const tempDataSource =
     {
@@ -56,6 +57,7 @@ constructor(props){
             <Treebeard
                 data={tempDataSource}
                 onToggle={this.onToggle}
+                style={Style}
                 />
         );
     }
