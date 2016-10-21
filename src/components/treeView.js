@@ -73,12 +73,17 @@ constructor(props){
     }
     render(){
         return (
+<div>
+    <h3>Here will be the server name </h3>
+
+
             <Treebeard
                 data={tempDataSource}
                 onToggle={this.onToggle}
                 style={Style}
                 decorators={decorators}
                 />
+                </div>
         );
     }
 };
