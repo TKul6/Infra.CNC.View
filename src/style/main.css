@@ -3,3 +3,8 @@
 body{
     font-family: 'Roboto', sans-serif;
 }
+
+.container {
+text-align: center;
+padding-top:20px;
+}

@@ -10,7 +10,7 @@ export default {
             backgroundColor: '#ffffff',
             margin: 0,
             padding: 0,
-            color: '#000000'
+            color: '#424040'
                 },
         node: {
             base: {
