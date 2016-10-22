@@ -9,12 +9,10 @@ import TreeView from './treeView'
 import {deepOrange500} from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({
-  palette: {
-    accent1Color: deepOrange500,
-  },
+    palette: {
+        accent1Color: deepOrange500,
+    },
 });
-
-
 
 export default class Main extends React.Component{
 
