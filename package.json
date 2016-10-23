@@ -28,7 +28,8 @@
     "babel-preset-es2015": "^6.16.0",
     "vinyl-source-stream": "^1.1.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "react-treebeard": "^1.1.4"
+    "react-treebeard": "^1.1.4",
+    "material-ui": "^0.16.1"
   },
   "devDependencies": {
     "jscs": "^3.0.7"
