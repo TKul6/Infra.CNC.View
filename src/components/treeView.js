@@ -5,6 +5,7 @@ import React from 'react';
 import {Treebeard, decorators} from 'react-treebeard'
 import Style from '../style/treeViewStyle.js'
 import TextField from 'material-ui/TextField'
+import AutoComplete from 'material-ui/AutoComplete'
 import * as filters from './filter';
 
 const tempDataSource =
@@ -61,7 +62,6 @@ decorators.Header = function(props){
 };
 export default class TreeView extends React.Component{
 
-    
     constructor(props) {
         super(props);
         this.state = {searchPaese : '',data : tempDataSource};
@@ -69,8 +69,7 @@ export default class TreeView extends React.Component{
         this.onFilter = this.onFilter.bind(this);
 }
 
-
-onFilter(e) {
+    onFilter(e) {
 
         this.setState({searchPaese : e.target.value});
         const filter = e.target.value.trim();
@@ -99,13 +98,11 @@ onFilter(e) {
 <TextField  hintText=''
       floatingLabelText='Search' value={this.state.searchPaese}
       onChange={this.onFilter}/>
-            <Treebeard
 
-                data={this.state.data}
+            <Treebeard data={this.state.data}
                 onToggle={this.onToggle}
                 style={Style}
-                decorators={decorators}
-                />
+                decorators={decorators}/>
                 </div>
         );
     }

@@ -27,7 +27,7 @@ var config = {
 
         images: "./src/images/*",
         favIcon: "./src/favicon.ico",
-        dist : "../bin",
+        dist : "./bin/",
         mainJs : "./src/app.js"
     }
 
