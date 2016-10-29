@@ -7,40 +7,7 @@ import Style from '../style/treeViewStyle.js'
 import TextField from 'material-ui/TextField'
 import AutoComplete from 'material-ui/AutoComplete'
 import * as filters from './filter';
-
-const tempDataSource =
-    {
-        name :'root',
-        toggled: false,
-        children : [
-            {
-                name: 'child1',
-                children : [
-                    {
-                        name : 'child11'
-                    },
-                    {
-                        name : 'child12'
-                    }
-                 ]
-            },
-            {
-                name : 'child2'
-            },
-            {
-                name : 'Tomer',
-                children : [
-                    {name: 'Khalili'},
-                    {name : 'Is Free'}
-
-                ]
-            }
-        ]
-
-    }
-
-    ;
-
+import  * as tempDataSource from '../api.js';
 
 decorators.Header = function(props){
 
@@ -64,22 +31,23 @@ export default class TreeView extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {searchPaese : '',data : tempDataSource};
+        this.state = {searchPaese : ''};
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
+
 }
-
+/*Filter will not work because the state does not contains the tree anymore,
+When I find a solution on how to update the tree state without changing the tree's toggle layout. I shoud reactivate this methos */
     onFilter(e) {
-
         this.setState({searchPaese : e.target.value});
         const filter = e.target.value.trim();
         if (filter) {
-            var filtered = filters.filterTree(tempDataSource, filter);
+            var filtered = filters.filterTree(this.props.data, filter);
             filtered = filters.expandFilteredNodes(filtered, filter);
             this.setState({data: filtered});
         }
         else {
-            this.setState({data : tempDataSource})
+            this.setState({data : this.props.data})
         }
     }
 
@@ -90,6 +58,7 @@ export default class TreeView extends React.Component{
         this.setState({cursor: node});
     }
     render(){
+
         return (
 <div>
 
@@ -99,7 +68,7 @@ export default class TreeView extends React.Component{
       floatingLabelText='Search' value={this.state.searchPaese}
       onChange={this.onFilter}/>
 
-            <Treebeard data={this.state.data}
+            <Treebeard data={this.props.data}
                 onToggle={this.onToggle}
                 style={Style}
                 decorators={decorators}/>
