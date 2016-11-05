@@ -77,12 +77,12 @@ gulp.task('lint',function(){
 
 gulp.task('watch',function(){
     gulp.watch(config.paths.html,['publish-html']);
-    gulp.watch(config.paths.js,['bundle-js','lint']);
-    gulp.watch(config.paths.mainJs,['bundle-js','lint']);
+    gulp.watch(config.paths.js,['bundle-js']);
+    gulp.watch(config.paths.mainJs,['bundle-js']);
     gulp.watch(config.paths.css,['css']);
 });
 
-gulp.task('bundle-js',function(){
+gulp.task('bundle-js',['lint'],function(){
     return  browserify({
         extensions: ['.js'],
         entries: config.paths.mainJs
@@ -101,4 +101,4 @@ gulp.task('bundle-js',function(){
 
 });
 
-gulp.task('default',['open','publish-html','bundle-js','images','lint', 'watch','css']);
+gulp.task('default',['open','publish-html','bundle-js','images','watch','css']);
