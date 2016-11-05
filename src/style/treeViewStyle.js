@@ -26,7 +26,9 @@ export default {
                 display: 'block'
             },
             activeLink: {
-                background: '#ffffff'
+                background: '#E3F2FD',
+                 'border-radius': '100px',
+                display: 'inline-block'
             },
             toggle: {
                 base: {
@@ -52,8 +54,6 @@ export default {
                     fill: '#ffffff',
                     strokeWidth: 0,
                     fontSize : '5px'
-
-
                 }
             },
             header: {
