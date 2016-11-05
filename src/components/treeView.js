@@ -2,77 +2,75 @@
  * Created by Tomer on 15/10/2016.
  */
 import React from 'react';
-import {Treebeard, decorators} from 'react-treebeard'
-import Style from '../style/treeViewStyle.js'
-import TextField from 'material-ui/TextField'
-import AutoComplete from 'material-ui/AutoComplete'
+import { Treebeard, decorators } from 'react-treebeard';
+import Style from '../style/treeViewStyle.js';
+import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 import * as filters from './filter';
-import  * as tempDataSource from '../api.js';
 
-decorators.Header = function(props){
+decorators.Header = function (props) {
 
     const style = props.style;
 
-    const iconStyle = {marginRight: '5px',
-                        verticalAlign : 'middle'};
+    const iconStyle = {
+        marginRight: '5px',
+        verticalAlign: 'middle'
+    };
 
-    var nodeType = props.node.children ? 'folder' : 'insert_drive_file' ;
+    var nodeType = props.node.children ? 'folder' : 'insert_drive_file';
 
     return (
-            <div style={style.base}>
-                <div style={style.title}>
+        <div style={style.base}>
+            <div style={style.title}>
                 <i className='material-icons' style={iconStyle}>{nodeType}</i>
                 {props.node.name}
-                </div>
-                </div>);
+            </div>
+        </div>);
 
 };
-export default class TreeView extends React.Component{
+export default class TreeView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {searchPaese : ''};
+        this.state = { searchPaese: '', data: {} };
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
+    }
 
-}
-/*Filter will not work because the state does not contains the tree anymore,
-When I find a solution on how to update the tree state without changing the tree's toggle layout. I shoud reactivate this methos */
     onFilter(e) {
-        this.setState({searchPaese : e.target.value});
+        this.setState({ searchPaese: e.target.value });
         const filter = e.target.value.trim();
         if (filter) {
             var filtered = filters.filterTree(this.props.data, filter);
             filtered = filters.expandFilteredNodes(filtered, filter);
-            this.setState({data: filtered});
+            this.setState({ data: filtered });
         }
         else {
-            this.setState({data : this.props.data})
+            this.setState({ data: this.props.data })
         }
     }
 
-    onToggle(node, toggled){
-        if (this.state.cursor) {this.state.cursor.active = false;}
+    onToggle(node, toggled) {
+        if (this.state.cursor) { this.state.cursor.active = false; }
         node.active = true;
         if (node.children) { node.toggled = toggled; }
-        this.setState({cursor: node});
+        this.setState({ cursor: node });
     }
-    render(){
-
+    render() {
         return (
-<div>
+            <div>
 
-    <h3>Tree View:</h3>
+                <h3>Tree View:</h3>
 
-<TextField  hintText=''
-      floatingLabelText='Search' value={this.state.searchPaese}
-      onChange={this.onFilter}/>
+                <TextField hintText=''
+                    floatingLabelText='Search' value={this.state.searchPaese}
+                    onChange={this.onFilter} />
 
-            <Treebeard data={this.props.data}
-                onToggle={this.onToggle}
-                style={Style}
-                decorators={decorators}/>
-                </div>
+                <Treebeard data={this.state.data}
+                    onToggle={this.onToggle}
+                    style={Style}
+                    decorators={decorators} />
+            </div>
         );
     }
 };

@@ -24,14 +24,10 @@ export default class Main extends React.Component{
                 connectionLayout: {}
 
             },
-            treeData : {},
+            treeData : tempDataSource,
             checks : []
         }
 
-    }
-
-    componentDidMount() {
-        this.setState({treeData : tempDataSource});
     }
 
     render() {

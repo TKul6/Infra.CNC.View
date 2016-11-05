@@ -1,32 +1,31 @@
 var data =
     {
-        name :'root',
+        name: 'root',
         toggled: false,
-        children : [
+        children: [
             {
                 name: 'child1',
-                children : [
+                children: [
                     {
-                        name : 'child11'
+                        name: 'child11'
                     },
                     {
-                        name : 'child12'
+                        name: 'child12'
                     }
-                 ]
+                ]
             },
             {
-                name : 'child2'
+                name: 'child2'
             },
             {
-                name : 'Tomer',
-                children : [
-                    {name: 'Khalili'},
-                    {name : 'Is Free'}
+                name: 'Tomer',
+                children: [
+                    { name: 'Khalili' },
+                    { name: 'Is Free' }
 
                 ]
             }
         ]
-
     };
 
 module.exports = data;
