@@ -32,7 +32,7 @@ export default class TreeView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { searchPaese: '', data: {} };
+        this.state = { searchPaese: '', data: this.props.data};
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
     }

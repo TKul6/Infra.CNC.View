@@ -31,6 +31,8 @@ export default class Main extends React.Component{
     }
 
     render() {
+
+        console.log(this.state.treeData);
         return (<MuiThemeProvider muiTheme={muiTheme}>
                     <div>
                     <div className='container'>
