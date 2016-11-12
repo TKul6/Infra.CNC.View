@@ -6,6 +6,9 @@ import { Treebeard, decorators } from 'react-treebeard';
 import Style from '../style/treeViewStyle.js';
 import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
+import IconMenu from 'material-ui/IconMenu';
+import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
 import * as filters from './filter';
 
 decorators.Header = function (props) {
@@ -32,9 +35,10 @@ export default class TreeView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { searchPaese: '', data: this.props.data};
+        this.state = { searchPaese: '', data: this.props.data, selectedNode : null};
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
+        this.copyPath = this.copyPath.bind(this);
     }
 
     onFilter(e) {
@@ -53,18 +57,32 @@ export default class TreeView extends React.Component {
     onToggle(node, toggled) {
         if (this.state.cursor) { this.state.cursor.active = false; }
         node.active = true;
+        this.setState({selectedNode: node});
         if (node.children) { node.toggled = toggled; }
-        this.setState({ cursor: node });
+        this.setState({ cursor: node});
     }
+
+copyPath(e)
+{
+    console.log('copy path');
+}
+
     render() {
         return (
-            <div>
+            <div className="component">
 
                 <h3>Tree View:</h3>
 
+<div>
                 <TextField hintText=''
                     floatingLabelText='Search' value={this.state.searchPaese}
                     onChange={this.onFilter} />
+</div>
+<div>
+      <IconButton tooltip="Copy Path"  tooltipPosition="top-center" disabled={this.state.selectedNode == null} onClick={this.copyPath}>
+      <FontIcon className="material-icons">content_copy</FontIcon>
+    </IconButton>
+      </div>          
 
                 <Treebeard data={this.state.data}
                     onToggle={this.onToggle}
