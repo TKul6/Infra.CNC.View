@@ -9,6 +9,7 @@ import TreeView from './treeView'
 import {deepOrange500} from 'material-ui/styles/colors';
 import LightTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import  * as tempDataSource from '../api.js';
+import Snackbar from 'material-ui/Snackbar';
 
 const muiTheme = getMuiTheme({})
 
@@ -25,11 +26,23 @@ export default class Main extends React.Component{
 
             },
             treeData : tempDataSource,
-            checks : []
-        }
+            checks : [],
+            snackbar : {
+                isOpen : false,
+                message : ''
+            }
 
+        }
+        this.displayMessage = this.displayMessage.bind(this);
     }
 
+    displayMessage(message) {
+        this.setState({snackbar : {isOpen: true, message : message}});
+    }
+    onSnackbarClosed(reason) {
+
+        this.setState({snackbar : {isOpen : false, message : ''}});
+}
     render() {
 
         console.log(this.state.treeData);
@@ -39,7 +52,14 @@ export default class Main extends React.Component{
                         <h1>{this.state.serverDetails.name}</h1>
                     </div>
                     <div>
-                        <TreeView  data={this.state.treeData}/>
+                        <TreeView  data={this.state.treeData} displayMessage={this.displayMessage}/>
+                    </div>
+                    <div>
+   <Snackbar
+          open={this.state.snackbar.isOpen}
+          message={this.state.snackbar.message}
+          autoHideDuration={4000}
+        />
                     </div>
                     </div>
                 </MuiThemeProvider>)
