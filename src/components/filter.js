@@ -40,3 +40,21 @@ export const expandFilteredNodes = (node, filter, matcher = defaultMatcher) => {
       toggled: shouldExpand
     });
 };
+
+// Getting the XPath of the node in the tree
+export const getPath = function(root, node, path){
+
+        if (root === node) {
+            return path + '/' + node.name;
+        }
+        else if (root.children && root.children.length) {
+
+            var currentPath = path + '/' + root.name;
+
+            var result = null
+            for (var childIndex = 0; childIndex < root.children.length && result == null; childIndex++) {
+                result = getPath(root.children[childIndex],node,currentPath);
+            }
+        }
+        return result;
+    }

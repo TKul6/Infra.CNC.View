@@ -10,6 +10,7 @@ import IconMenu from 'material-ui/IconMenu';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import * as filters from './filter';
+import  copy from 'copy-to-clipboard';
 
 decorators.Header = function (props) {
 
@@ -62,10 +63,13 @@ export default class TreeView extends React.Component {
         this.setState({ cursor: node});
     }
 
-copyPath(e)
-{
-    console.log('copy path');
-}
+    copyPath(e) {
+        var path = filters.getPath(this.props.data,this.state.selectedNode,'');
+
+        console.log(path);
+
+        copy(path);
+    }
 
     render() {
         return (
