@@ -66,8 +66,6 @@ export default class TreeView extends React.Component {
     copyPath(e) {
         var path = filters.getPath(this.props.data,this.state.selectedNode,'');
 
-        console.log(path);
-
         copy(path);
     }
 
