@@ -15,29 +15,39 @@
   "author": "Tomer Khalili",
   "license": "ISC",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "react-treeview-component": "^0.1.2",
-    "eslint": "^3.7.1",
-    "gulp-open": "^2.0.0",
-    "gulp-connect": "^5.0.0",
-    "browserify": "^13.1.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.16.0",
     "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "cjs-wamp": "^1.3.0",
+    "copy-to-clipboard": "^3.0.5",
+    "eslint": "^3.7.1",
+    "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-connect": "^5.0.0",
     "gulp-eslint": "^3.0.1",
+    "gulp-open": "^2.0.0",
+    "material-ui": "^0.16.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "babel-preset-es2015": "^6.16.0",
-    "vinyl-source-stream": "^1.1.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "react-treebeard": "^1.1.4",
-    "material-ui": "^0.16.1",
-    "copy-to-clipboard": "^3.0.5",
-    "websocket": "^1.0.23",
+    "react-treeview-component": "^0.1.2",
+    "vinyl-source-stream": "^1.1.0",
     "wamp.io": "0.0.4",
-    "cjs-wamp": "^1.3.0",
+    "wampy": "^4.0.0",
+    "websocket": "^1.0.23",
+    "when": "^3.7.7",
     "ws": "^1.1.1"
   },
   "devDependencies": {
-    "jscs": "^3.0.7"
+    "cjs-wamp": "^1.3.0",
+    "eslint": "^3.12.2",
+    "eslint-plugin-react": "^6.8.0",
+    "jscs": "^3.0.7",
+    "ws": "^1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/username/repository.git"
   }
 }

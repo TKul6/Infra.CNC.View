@@ -3,3 +3,13 @@
 node_modules/
 
 bin/
+
+src/Simulator/.vs/
+
+src/Simulator/packages/
+
+src/Simulator/Simulator/bin/
+
+src/Simulator/Simulator/obj/
+
+
