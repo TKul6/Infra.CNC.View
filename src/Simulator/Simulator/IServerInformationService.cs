@@ -17,6 +17,8 @@ namespace Simulator
     {
         public string GetServerName()
         {
+            Console.WriteLine("Sending server name");
+
             return "Test Server Name";
         }
     }

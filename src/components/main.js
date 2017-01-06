@@ -47,6 +47,8 @@ export default class Main extends React.Component {
                 console.log('connected to server');
                 console.log('subscrbing to cncData topic');
 
+                var serverName = client.call('infra.cnc.serverName',null, { onSuccess: (name) => { this.setState({ serverDetails:{name  : name }}); } });
+
                 client.subscribe('cncData', (data) => {
                     console.log('got data');
                     console.log(data);
@@ -58,6 +60,9 @@ export default class Main extends React.Component {
 
     displayMessage(message) {
         this.setState({ snackbar: { isOpen: true, message: message } });
+        
+
+
     }
     onSnackbarClosed(reason) {
 
