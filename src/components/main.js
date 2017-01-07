@@ -10,9 +10,11 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import LightTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Snackbar from 'material-ui/Snackbar';
 
+
 /*Local depenencies */
 import TreeView from './treeView';
 import * as tempDataSource from '../api.js';
+import TopMenu from './topMenu';
 
 /* Wamp dependencies */
 import Wampy from 'wampy';
@@ -72,6 +74,7 @@ export default class Main extends React.Component {
 
         return (<MuiThemeProvider muiTheme={muiTheme}>
             <div>
+     <TopMenu />
                 <div className='container'>
                     <h1>{this.state.serverDetails.name}</h1>
                 </div>
