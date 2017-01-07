@@ -1,7 +1,7 @@
 import React from 'react';
 import  AppBar  from 'material-ui/AppBar';
 
-export default class TopMenu extends React.Component {
+export default class ApplicationBar extends React.Component {
 
     constructor(props) {
         super(props);
