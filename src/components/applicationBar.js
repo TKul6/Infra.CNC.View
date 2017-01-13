@@ -36,7 +36,7 @@ export default class ApplicationBar extends React.Component {
                 <AppBar title='Cnc View'  iconStyleLeft={iconStyle}
                 iconElementLeft={ <FontIcon className='material-icons white' color={blue100}>build</FontIcon>}
                 children={<TextField hintText='http://localhost:4099/api/v1/cnc' floatingLabelText='Connect to server'
-                className='app-bar-component' underlineStyle={labelStyles.underlineStyle}
+                underlineStyle={labelStyles.underlineStyle}
                 floatingLabelStyle={labelStyles.whiteText}
                 hintStyle={labelStyles.semiWhiteText} inputStyle={labelStyles.whiteText} />} />
             </div>)
