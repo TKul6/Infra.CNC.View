@@ -48,7 +48,7 @@ export default class Main extends React.Component {
                 console.log('connected to server');
                 console.log('subscrbing to cncData topic');
 
-                var serverName = client.call('infra.cnc.serverName',null, { onSuccess: (name) => { this.setState({ serverDetails:{name  : name }}); } });
+                var serverName = client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.setState({ serverDetails: { name: name } }); } });
 
                 client.subscribe('cncData', (data) => {
                     console.log('got data');
@@ -61,7 +61,7 @@ export default class Main extends React.Component {
 
     displayMessage(message) {
         this.setState({ snackbar: { isOpen: true, message: message } });
-        
+
 
 
     }
@@ -73,7 +73,7 @@ export default class Main extends React.Component {
 
         return (<MuiThemeProvider muiTheme={muiTheme}>
             <div>
-     <ApplicationBar />
+                <ApplicationBar />
                 <div className='container'>
                     <h1>{this.state.serverDetails.name}</h1>
                 </div>
