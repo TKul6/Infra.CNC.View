@@ -15,8 +15,7 @@ import TreeView from './treeView';
 import * as tempDataSource from '../api.js';
 import ApplicationBar from './applicationBar';
 
-/* Wamp dependencies */
-import Wampy from 'wampy';
+
 
 const muiTheme = getMuiTheme({})
 
@@ -26,8 +25,6 @@ export default class Main extends React.Component {
         super(props)
         this.state = {
             serverDetails: {
-                url: '',
-                method: '',
                 name: 'Server Name',
                 connectionLayout: {}
 
@@ -40,23 +37,9 @@ export default class Main extends React.Component {
             }
         }
         this.displayMessage = this.displayMessage.bind(this);
+        this.updateStatus = this.updateStatus.bind(this);
 
-        console.log('connecting to WAMP server ...');
 
-        var client = new Wampy('ws://localhost:4099/', {
-            onConnect: () => {
-                console.log('connected to server');
-                console.log('subscrbing to cncData topic');
-
-                var serverName = client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.setState({ serverDetails: { name: name } }); } });
-
-                client.subscribe('cncData', (data) => {
-                    console.log('got data');
-                    console.log(data);
-                });
-
-            }, realm: 'infra.cncService.simulator', autoReconnect: false
-        });
     }
 
     displayMessage(message) {
@@ -69,11 +52,17 @@ export default class Main extends React.Component {
 
         this.setState({ snackbar: { isOpen: false, message: '' } });
     }
+
+    updateStatus(serverName) {
+        console.log('update server name to: ' + serverName );
+        this.setState({ serverDetails: { name: serverName } });
+    }
+
     render() {
 
         return (<MuiThemeProvider muiTheme={muiTheme}>
             <div>
-                <ApplicationBar />
+                <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} />
                 <div className='container'>
                     <h1>{this.state.serverDetails.name}</h1>
                 </div>
