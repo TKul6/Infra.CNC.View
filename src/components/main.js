@@ -16,7 +16,6 @@ import * as tempDataSource from '../api.js';
 import ApplicationBar from './applicationBar';
 
 
-
 const muiTheme = getMuiTheme({})
 
 export default class Main extends React.Component {

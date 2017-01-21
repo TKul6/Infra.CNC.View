@@ -1,4 +1,9 @@
+
+/*React dependencies */
 import React from 'react';
+
+
+/*Material UI depenencies */
 import { teal100, white } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -60,8 +65,6 @@ export default class ServerConnector extends React.Component {
 
                 client.call('infra.cnc.serverName', null, {onSuccess: (name) => { this.props.updateStatus(name); }});
 
-
-
                 client.subscribe('cncData', (data) => {
                     console.log('got data');
                     console.log(data);
@@ -80,7 +83,7 @@ export default class ServerConnector extends React.Component {
                     floatingLabelStyle={labelStyles.whiteText}
                     hintStyle={labelStyles.semiWhiteText} inputStyle={labelStyles.whiteText}
                     onChange={this.updateServerUrl} />
-                <IconButton tooltip="Connect to server" onClick={this.connectToServer}><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
+                <IconButton tooltip="Connect to server" onClick={this.connectToServer} className='white-color'><FontIcon className="material-icons" color="white">arrow_forward</FontIcon></IconButton>
 
             </div>);
     }
