@@ -37,7 +37,7 @@ export default class Main extends React.Component {
         }
         this.displayMessage = this.displayMessage.bind(this);
         this.updateStatus = this.updateStatus.bind(this);
-
+        this.updateTree = this.updateTree.bind(this);
 
     }
 
@@ -53,15 +53,19 @@ export default class Main extends React.Component {
     }
 
     updateStatus(serverName) {
-        console.log('update server name to: ' + serverName );
         this.setState({ serverDetails: { name: serverName } });
+    }
+
+
+    updateTree(newTree) {
+        this.setState({ treeData: newTree });
     }
 
     render() {
 
         return (<MuiThemeProvider muiTheme={muiTheme}>
             <div>
-                <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} />
+                <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree} />
                 <div className='container'>
                     <h1>{this.state.serverDetails.name}</h1>
                 </div>
@@ -73,7 +77,7 @@ export default class Main extends React.Component {
                         open={this.state.snackbar.isOpen}
                         message={this.state.snackbar.message}
                         autoHideDuration={4000}
-                        />
+                    />
                 </div>
             </div>
         </MuiThemeProvider>)

@@ -35,11 +35,12 @@ export default class ServerConnector extends React.Component {
 
         this.connectToServer = this.connectToServer.bind(this);
         this.updateServerUrl = this.updateServerUrl.bind(this);
+        this.normalizeTree = this.normalizeTree.bind(this);
         this.state = {
             serverUrl: 'ws://localhost:4099/api/v1/cnc'
         };
 
-        this.wampCleent = null;
+        this.wampClient = null;
 
     }
 
@@ -59,21 +60,36 @@ export default class ServerConnector extends React.Component {
         var client = new Wampy(this.state.serverUrl, {
             onConnect: () => {
 
-                console.log(this);
+                this.props.dispalyMessage('Connected to server');
 
-                 this.props.dispalyMessage('Connected to server');
+                client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.updateStatus(name); } });
 
-                client.call('infra.cnc.serverName', null, {onSuccess: (name) => { this.props.updateStatus(name); }});
+                client.subscribe('cncData', (cncData) => {
+                 
+                    var normalizedTree = this.normalizeTree(cncData[0]);
 
-                client.subscribe('cncData', (data) => {
-                    console.log('got data');
-                    console.log(data);
+                    this.props.updateTree(normalizedTree);
                 });
 
             }, realm: 'infra.cncService.simulator', autoReconnect: false
         });
     }
 
+    normalizeTree(node) {
+
+        if (Array.isArray(node.value)) {
+            node.name = node.name;
+            node.children = node.value
+
+            node.children.forEach(item => this.normalizeTree(item));
+        }
+
+        else {
+            node.name = node.name + " = " + node.value;
+        }
+
+        return node;
+    }
     render() {
         return (
             <div>
@@ -83,7 +99,7 @@ export default class ServerConnector extends React.Component {
                     floatingLabelStyle={labelStyles.whiteText}
                     hintStyle={labelStyles.semiWhiteText} inputStyle={labelStyles.whiteText}
                     onChange={this.updateServerUrl} />
-                <IconButton tooltip="Connect to server" onClick={this.connectToServer}><FontIcon className="material-icons" color="white">arrow_forward</FontIcon></IconButton>
+                <IconButton tooltip='Connect to server' onClick={this.connectToServer}><FontIcon className="material-icons" color="white">arrow_forward</FontIcon></IconButton>
 
             </div>);
     }

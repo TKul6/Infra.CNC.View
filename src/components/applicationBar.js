@@ -27,7 +27,8 @@ export default class ApplicationBar extends React.Component {
             <div id='appBarPlaceHolder'>
                 <AppBar title='Cnc View' iconStyleLeft={style.icon} style={style}
                     iconElementLeft={<FontIcon className='material-icons white' color={blue100}>build</FontIcon>}
-                    children={<ServerConnector dispalyMessage={this.props.displayMessage} updateStatus={this.props.updateStatus} />} />
+                    children={<ServerConnector dispalyMessage={this.props.displayMessage} updateStatus={this.props.updateStatus}
+                    updateTree={this.props.updateTree} />} />
             </div>
         )
             ;

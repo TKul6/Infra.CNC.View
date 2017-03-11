@@ -88,7 +88,7 @@ export default class TreeView extends React.Component {
     </IconButton>
       </div>          
 
-                <Treebeard data={this.state.data}
+                <Treebeard data={this.props.data}
                     onToggle={this.onToggle}
                     style={Style}
                     decorators={decorators} />
