@@ -38,18 +38,22 @@ export default class Main extends React.Component {
         this.displayMessage = this.displayMessage.bind(this);
         this.updateStatus = this.updateStatus.bind(this);
         this.updateTree = this.updateTree.bind(this);
+        this.closeSnackbar = this.closeSnackbar.bind(this);
 
     }
 
     displayMessage(message) {
-        this.setState({ snackbar: { isOpen: true, message: message } });
 
+        if (message) {
+            console.log('displaying message ' + message);
+            this.setState({ snackbar: { isOpen: true, message: message } });
+        }
 
 
     }
-    onSnackbarClosed(reason) {
+    closeSnackbar(reason) {
 
-        this.setState({ snackbar: { isOpen: false, message: '' } });
+        this.setState({ snackbar: { isOpen: false, message: '' }});
     }
 
     updateStatus(serverName) {
@@ -77,6 +81,7 @@ export default class Main extends React.Component {
                         open={this.state.snackbar.isOpen}
                         message={this.state.snackbar.message}
                         autoHideDuration={4000}
+                        onRequestClose={this.closeSnackbar}
                     />
                 </div>
             </div>
