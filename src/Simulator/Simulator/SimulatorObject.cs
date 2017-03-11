@@ -27,15 +27,5 @@ namespace Simulator
 
     }
 
-    //public class SimulatorObject : NamedSimulatorValue
-    //{
-        
-    //    public SimulatorObject(string name, NamedSimulatorValue children)
-    //    {
-    //     Name = name   
-    //    }
-
-    //}
-
 }
 
