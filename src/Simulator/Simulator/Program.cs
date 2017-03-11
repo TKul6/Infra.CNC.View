@@ -23,33 +23,7 @@ namespace Simulator
 
             const string location = "ws://127.0.0.1:4099/";
 
-
-
-var serverStatus = new NamedSimulatorValue("Status","Started");
-
-var inputPortEventsFiltered = new NamedSimulatorValue("EventsFilted",0);
-
-var inputPortEventsProcessed = new NamedSimulatorValue("EventsProccessed",0);
-
-var inputPortEventsPublished = new NamedSimulatorValue("EventsPublished",0);
-
-var logicEventsFiltered = new NamedSimulatorValue("EventsFilted",0);
-
-var logicEventsProcessed = new NamedSimulatorValue("EventsProccessed",0);
-
-var logicEventsPublished = new NamedSimulatorValue("EventsPublished",0);
-
-var inputPortParams = new ISimulatorValue[]{inputPortEventsFiltered,inputPortEventsProcessed,inputPortEventsPublished};
-
-var inputPort = new NamedSimulatorValue("inputPort", inputPortParams);
-
-var logicParams = new ISimulatorValue[]{logicEventsFiltered,logicEventsProcessed,logicEventsPublished};
-
-var logic = new NamedSimulatorValue("logic", logicParams);
-
-var components = new NamedSimulatorValue("Components", new ISimulatorValue[] {inputPort,logic});
-
-var root = new NamedSimulatorValue("root",new ISimulatorValue[] {serverStatus,components});
+            var simulator = new Simulator();
 
 
             using (IWampHost host = new WampHost())
@@ -84,7 +58,9 @@ var root = new NamedSimulatorValue("root",new ISimulatorValue[] {serverStatus,co
 
                 while (choise != 'x' && choise != 'X')
                 {
-                    subject.OnNext(root);
+                    simulator.GenerateValues();
+
+                    subject.OnNext(simulator.Root);
 
                     Console.WriteLine("Data was sent!");
 
