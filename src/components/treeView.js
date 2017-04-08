@@ -40,6 +40,7 @@ export default class TreeView extends React.Component {
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
         this.copyPath = this.copyPath.bind(this);
+        this.normalizeTree = this.normalizeTree.bind(this);
     }
 
     onFilter(e) {
@@ -71,6 +72,23 @@ export default class TreeView extends React.Component {
         this.props.displayMessage(this.state.selectedNode.name +  ' was copied');
     }
 
+
+normalizeTree(node) {
+
+        if (Array.isArray(node.value)) {
+            node.name = node.name;
+            node.children = node.value
+
+            node.children.forEach(item => this.normalizeTree(item));
+        }
+
+        else if(!node.name.includes('=')) {
+            node.name = node.name + " = " + node.value;
+        }
+
+        return node;
+    }
+
     render() {
         return (
             <div className="component">
@@ -88,11 +106,12 @@ export default class TreeView extends React.Component {
     </IconButton>
       </div>          
 
-                <Treebeard data={this.props.data}
+                <Treebeard data={this.normalizeTree(this.props.data)}
                     onToggle={this.onToggle}
                     style={Style}
                     decorators={decorators} />
             </div>
+
         );
     }
 };

@@ -69,7 +69,7 @@ export default class Main extends React.Component {
 
         return (<MuiThemeProvider muiTheme={muiTheme}>
             <div>
-                <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree} />
+                <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree}  treeData={this.state.treeData}/>
                 <div className='container'>
                     <h1>{this.state.serverDetails.name}</h1>
                 </div>

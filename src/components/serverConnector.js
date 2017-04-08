@@ -35,7 +35,6 @@ export default class ServerConnector extends React.Component {
 
         this.connectToServer = this.connectToServer.bind(this);
         this.updateServerUrl = this.updateServerUrl.bind(this);
-        this.normalizeTree = this.normalizeTree.bind(this);
         this.state = {
             serverUrl: 'ws://localhost:4099/api/v1/cnc'
         };
@@ -65,31 +64,16 @@ export default class ServerConnector extends React.Component {
                 client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.updateStatus(name); } });
 
                 client.subscribe('cncData', (cncData) => {
-                 
-                    var normalizedTree = this.normalizeTree(cncData[0]);
 
-                    this.props.updateTree(normalizedTree);
+                    var updatedTree = Object.assign(this.props.treeData,cncData[0]);
+
+                    this.props.updateTree(updatedTree);
                 });
 
             }, realm: 'infra.cncService.simulator', autoReconnect: false
         });
     }
 
-    normalizeTree(node) {
-
-        if (Array.isArray(node.value)) {
-            node.name = node.name;
-            node.children = node.value
-
-            node.children.forEach(item => this.normalizeTree(item));
-        }
-
-        else {
-            node.name = node.name + " = " + node.value;
-        }
-
-        return node;
-    }
     render() {
         return (
             <div>

@@ -1,31 +1,52 @@
 var data =
     {
         name: 'root',
-        toggled: false,
-        children: [
+        value: [
+
             {
-                name: 'child1',
-                children: [
+                name: 'Status',
+                value: 'Not Started'
+            },
+
+            {
+                name: 'Components',
+                value: [
                     {
-                        name: 'child11'
+                        name: 'inputPort',
+                        value: [
+                            {
+                                name: 'EventsFiltered',
+                                value: 0
+                            },
+                            {
+                                name: 'EventsProccessed ',
+                                value: 0
+                            },
+                            {
+                                name: 'EventsPublished',
+                                value: 0
+                            },
+                        ]
                     },
                     {
-                        name: 'child12'
+                        name: 'logic',
+                        value: [
+                            {
+                                name: 'EventsFiltered',
+                                value: 0
+                            },
+                            {
+                                name: 'EventsProccessed',
+                                value: 0
+                            },
+                            {
+                                name: 'EventsPublished',
+                                value: 0
+                            },
+                        ]
                     }
                 ]
-            },
-            {
-                name: 'child2'
-            },
-            {
-                name: 'Tomer',
-                children: [
-                    { name: 'Khalili' },
-                    { name: 'Is Free' }
-
-                ]
-            }
-        ]
+            }]
     };
 
 module.exports = data;
