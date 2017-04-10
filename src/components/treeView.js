@@ -10,7 +10,7 @@ import IconMenu from 'material-ui/IconMenu';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import * as filters from './filter';
-import  copy from 'copy-to-clipboard';
+import copy from 'copy-to-clipboard';
 
 decorators.Header = function (props) {
 
@@ -36,11 +36,12 @@ export default class TreeView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { searchPaese: '', data: this.props.data, selectedNode : null};
+        this.state = { searchPaese: '', data: this.props.data, selectedNode: null };
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
         this.copyPath = this.copyPath.bind(this);
         this.normalizeTree = this.normalizeTree.bind(this);
+        this.getNodeId = this.getNodeId.bind(this);
     }
 
     onFilter(e) {
@@ -59,30 +60,43 @@ export default class TreeView extends React.Component {
     onToggle(node, toggled) {
         if (this.state.cursor) { this.state.cursor.active = false; }
         node.active = true;
-        this.setState({selectedNode: node});
+        this.setState({ selectedNode: node });
         if (node.children) { node.toggled = toggled; }
-        this.setState({ cursor: node});
+        this.setState({ cursor: node });
     }
 
     copyPath(e) {
-        var path = filters.getPath(this.props.data,this.state.selectedNode,'');
+        var path = filters.getPath(this.props.data, this.state.selectedNode);
 
         copy(path);
 
-        this.props.displayMessage(this.state.selectedNode.name +  ' was copied');
+        this.props.displayMessage(this.state.selectedNode.name + ' was copied');
     }
 
+    getNodeId(node, idPrefix) {
+        if (!node.id) {
+            if (idPrefix) {
+               return `${idPrefix}/${node.name}`;
+            }
+            else {
+                return node.name;
+            }
+        }
+        return node.id;
+    }
 
-normalizeTree(node) {
+    normalizeTree(node, idPrefix) {
+
+        node.id = this.getNodeId(node, idPrefix);
 
         if (Array.isArray(node.value)) {
             node.name = node.name;
             node.children = node.value
 
-            node.children.forEach(item => this.normalizeTree(item));
+            node.children.forEach(item => this.normalizeTree(item, node.id));
         }
 
-        else if(!node.name.includes('=')) {
+        else if (!node.name.includes('=')) {
             node.name = node.name + " = " + node.value;
         }
 
@@ -95,18 +109,18 @@ normalizeTree(node) {
 
                 <h3>Tree View:</h3>
 
-<div>
-                <TextField hintText=''
-                    floatingLabelText='Search' value={this.state.searchPaese}
-                    onChange={this.onFilter} />
-</div>
-<div>
-      <IconButton tooltip="Copy Path"  tooltipPosition="top-center" disabled={this.state.selectedNode == null} onClick={this.copyPath}>
-      <FontIcon className="material-icons">content_copy</FontIcon>
-    </IconButton>
-      </div>          
+                <div>
+                    <TextField hintText=''
+                        floatingLabelText='Search' value={this.state.searchPaese}
+                        onChange={this.onFilter} />
+                </div>
+                <div>
+                    <IconButton tooltip="Copy Path" tooltipPosition="top-center" disabled={this.state.selectedNode == null} onClick={this.copyPath}>
+                        <FontIcon className="material-icons">content_copy</FontIcon>
+                    </IconButton>
+                </div>
 
-                <Treebeard data={this.normalizeTree(this.props.data)}
+                <Treebeard data={this.normalizeTree(this.props.data, '')}
                     onToggle={this.onToggle}
                     style={Style}
                     decorators={decorators} />
