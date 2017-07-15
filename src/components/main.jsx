@@ -11,12 +11,15 @@ import LightTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Snackbar from 'material-ui/Snackbar';
 
 /*Local depenencies */
-import TreeView from './treeView';
+import TreeView from './treeView.jsx';
 import * as tempDataSource from '../api.js';
-import ApplicationBar from './applicationBar';
+import ApplicationBar from './applicationBar.jsx';
 
 
 const muiTheme = getMuiTheme({})
+
+
+
 
 export default class Main extends React.Component {
 
