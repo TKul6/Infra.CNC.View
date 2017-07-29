@@ -11,6 +11,10 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import * as filters from './filter';
 import copy from 'copy-to-clipboard';
+import { connect } from 'react-redux';
+
+/*Actions*/
+import * as appActions from './../actions/app-actions';
 
 decorators.Header = function (props) {
 
@@ -32,11 +36,11 @@ decorators.Header = function (props) {
         </div>);
 
 };
-export default class TreeView extends React.Component {
+class TreeView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { searchPaese: '', data: this.props.data, selectedNode: null };
+        this.state = { searchPaese: '', selectedNode: null };
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
         this.copyPath = this.copyPath.bind(this);
@@ -74,7 +78,7 @@ export default class TreeView extends React.Component {
     }
 
     getNodeId(node, idPrefix) {
-        if (!node.id) {
+        if ( !node.id) {
             if (idPrefix) {
                return `${idPrefix}/${node.name}`;
             }
@@ -120,7 +124,7 @@ export default class TreeView extends React.Component {
                     </IconButton>
                 </div>
 
-                <Treebeard data={this.normalizeTree(this.props.data, '')}
+                <Treebeard data={this.normalizeTree(this.props.tree, '')}
                     onToggle={this.onToggle}
                     style={Style}
                     decorators={decorators} />
@@ -130,3 +134,19 @@ export default class TreeView extends React.Component {
     }
 };
 
+const mapStateToProps = state => {
+
+
+    return {
+        tree: state.server.treeData,
+    }
+}
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         showMessage: (message) => dispatch(appActions.showMessageAction(message))
+//     }
+// }
+
+
+export default connect(mapStateToProps)(TreeView)

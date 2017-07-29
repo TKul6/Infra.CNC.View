@@ -23,9 +23,6 @@ import * as appActions from './../actions/app-actions';
 
 const muiTheme = getMuiTheme({})
 
-
-
-
 class Main extends React.Component {
 
     constructor(props) {
@@ -35,60 +32,48 @@ class Main extends React.Component {
                 connectionLayout: {}
 
             },
-            treeData: tempDataSource,
             checks: [],
-            snackbar: {
-                isOpen: false,
-                message: ''
-            }
-        }
+         }
         this.displayMessage = this.displayMessage.bind(this);
-        this.updateTree = this.updateTree.bind(this);
     }
 
     displayMessage(message) {
 
         if (message) {
-            console.log('displaying message ' + message);
-            this.setState({ snackbar: { isOpen: true, message: message } });
+             this.setState({ snackbar: { isOpen: true, message: message } });
         }
     }
-
-    updateTree(newTree) {
-        this.setState({ treeData: newTree });
-    }
-
-
     render() {
         return (
 
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
-                    <ApplicationBar displayMessage={this.displayMessage} updateTree={this.updateTree} treeData={this.state.treeData} />
+                    <ApplicationBar displayMessage={this.displayMessage} />
                     <div className='container'>
                         <h1>{this.props.serverName}</h1>
                     </div>
                     <div>
-                        <TreeView data={this.state.treeData} displayMessage={this.displayMessage} />
+                        <TreeView displayMessage={this.displayMessage} />
                     </div>
                     <div>
                         <Snackbar
                             open={this.props.snackbar.isOpen}
                             message={this.props.snackbar.message}
-                            autoHideDuration={4000}
+                            autoHideDuration={3000}
                             onRequestClose={this.props.hideSnackbar}
                         />
                     </div>
                 </div>
             </MuiThemeProvider>
-        )}
+        )
+    }
 
 }
 
 const mapStateToProps = state => {
     return {
         snackbar: state.app.snackbar,
-        serverName : state.server.serverName
+        serverName: state.server.serverName
     }
 }
 

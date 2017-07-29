@@ -18,7 +18,7 @@ import Wampy from 'wampy';
 
 import { connect } from 'react-redux'
 import {showMessageAction} from './../actions/app-actions';
-import {renameServerAction} from './../actions/server-actions';
+import {renameServerAction, treeDataUpdatedAction} from './../actions/server-actions';
 
 const labelStyles = {
 
@@ -71,9 +71,7 @@ class ServerConnector extends React.Component {
 
                 client.subscribe('cncData', (cncData) => {
 
-                    var updatedTree = Object.assign(this.props.treeData,cncData[0]);
-
-                    this.props.updateTree(updatedTree);
+                    this.props.onTreeDataRecieved(cncData[0]);
                 });
 
             }, realm: 'infra.cncService.simulator', autoReconnect: false
@@ -103,7 +101,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onServerNameChanged: (serverName) =>{
         dispatch(renameServerAction(serverName));
-    }
+    },
+    onTreeDataRecieved : (data) => dispatch(treeDataUpdatedAction(data))
+    
   }
 }
 
