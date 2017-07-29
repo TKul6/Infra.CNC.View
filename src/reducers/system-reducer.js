@@ -11,8 +11,10 @@ export function systemReducer(state = initialState, action) {
     switch (action.type) {
         case systemActions.SHOW_MESSAGE:
             return Object.assign({}, state, { snackbar: { isOpen: true, message: action.payload } });
-        case 'HIDE_SNACKBAR':
+            break;
+        case systemActions.HIDE_MESSAGE:
             return Object.assign({}, state, { snackbar: { isOpen: false, message: '' } });
+            break;
     }
     return state;
 

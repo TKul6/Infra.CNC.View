@@ -16,16 +16,17 @@ import * as tempDataSource from '../api.js';
 import ApplicationBar from './applicationBar.jsx';
 
 /*Redux */
+import { connect } from 'react-redux';
 
-
-import { connect } from 'react-redux'
+/*Actions*/
+import * as systemActions from './../actions/system-actions';
 
 const muiTheme = getMuiTheme({})
 
 
 
- 
- class Main extends React.Component {
+
+class Main extends React.Component {
 
     constructor(props) {
         super(props)
@@ -45,8 +46,6 @@ const muiTheme = getMuiTheme({})
         this.displayMessage = this.displayMessage.bind(this);
         this.updateStatus = this.updateStatus.bind(this);
         this.updateTree = this.updateTree.bind(this);
-        this.closeSnackbar = this.closeSnackbar.bind(this);
-
     }
 
     displayMessage(message) {
@@ -57,10 +56,6 @@ const muiTheme = getMuiTheme({})
         }
 
 
-    }
-    closeSnackbar(reason) {
-
-        this.setState({ snackbar: { isOpen: false, message: '' }});
     }
 
     updateStatus(serverName) {
@@ -74,45 +69,42 @@ const muiTheme = getMuiTheme({})
 
 
     render() {
-console.log(this.props);
         return (
-            
-                    <MuiThemeProvider muiTheme={muiTheme}>
-            <div>
-                <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree}  treeData={this.state.treeData}/>
-                <div className='container'>
-                    <h1>{this.state.serverDetails.name}</h1>
-                </div>
+
+            <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
-                    <TreeView data={this.state.treeData} displayMessage={this.displayMessage} />
+                    <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree} treeData={this.state.treeData} />
+                    <div className='container'>
+                        <h1>{this.state.serverDetails.name}</h1>
+                    </div>
+                    <div>
+                        <TreeView data={this.state.treeData} displayMessage={this.displayMessage} />
+                    </div>
+                    <div>
+                        <Snackbar
+                            open={this.props.snackbar.isOpen}
+                            message={this.props.snackbar.message}
+                            autoHideDuration={4000}
+                            onRequestClose={this.props.closeSnackbar}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <Snackbar
-                        open={this.props.snackbar.isOpen}
-                        message={this.props.snackbar.message}
-                        autoHideDuration={4000}
-                        onRequestClose={this.closeSnackbar}
-                    />
-                </div>
-            </div>
-        </MuiThemeProvider>
+            </MuiThemeProvider>
         )}
 
 }
 
 const mapStateToProps = state => {
-
-console.log(state);
-
-  return {
-    snackbar: state.snackbar
-  }
+    return {
+        snackbar: state.snackbar
+    }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-  }
+    return {
+        closeSnackbar: (reason) => dispatch(systemActions.hideMessageAction())
+    }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
 
