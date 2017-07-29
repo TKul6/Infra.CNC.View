@@ -17,7 +17,7 @@ import Wampy from 'wampy';
 /*Redux */
 
 import { connect } from 'react-redux'
-import {showMessageAction} from './../actions/system-actions';
+import {showMessageAction, renameServerAction} from './../actions/system-actions';
 
 const labelStyles = {
 
@@ -65,7 +65,7 @@ class ServerConnector extends React.Component {
         var client = new Wampy(this.state.serverUrl, {
             onConnect: () => {
                
-                client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.updateStatus(name); 
+                client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.onServerNameChanged(name); 
                 this.props.onServerConnected(name);} });
 
                 client.subscribe('cncData', (cncData) => {
@@ -99,6 +99,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onServerConnected: (serverName) => {
         dispatch(showMessageAction(`Successfully connected to ${serverName}`));
+    },
+    onServerNameChanged: (serverName) =>{
+        dispatch(renameServerAction(serverName));
     }
   }
 }

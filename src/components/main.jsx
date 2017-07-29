@@ -32,7 +32,6 @@ class Main extends React.Component {
         super(props)
         this.state = {
             serverDetails: {
-                name: 'Server Name',
                 connectionLayout: {}
 
             },
@@ -44,7 +43,6 @@ class Main extends React.Component {
             }
         }
         this.displayMessage = this.displayMessage.bind(this);
-        this.updateStatus = this.updateStatus.bind(this);
         this.updateTree = this.updateTree.bind(this);
     }
 
@@ -54,14 +52,7 @@ class Main extends React.Component {
             console.log('displaying message ' + message);
             this.setState({ snackbar: { isOpen: true, message: message } });
         }
-
-
     }
-
-    updateStatus(serverName) {
-        this.setState({ serverDetails: { name: serverName } });
-    }
-
 
     updateTree(newTree) {
         this.setState({ treeData: newTree });
@@ -73,9 +64,9 @@ class Main extends React.Component {
 
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
-                    <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree} treeData={this.state.treeData} />
+                    <ApplicationBar displayMessage={this.displayMessage} updateTree={this.updateTree} treeData={this.state.treeData} />
                     <div className='container'>
-                        <h1>{this.state.serverDetails.name}</h1>
+                        <h1>{this.props.serverName}</h1>
                     </div>
                     <div>
                         <TreeView data={this.state.treeData} displayMessage={this.displayMessage} />
@@ -96,7 +87,8 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        snackbar: state.snackbar
+        snackbar: state.snackbar,
+        serverName : state.serverName
     }
 }
 
