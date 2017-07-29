@@ -13,6 +13,12 @@ import IconButton from 'material-ui/IconButton';
 /* Wamp dependencies */
 import Wampy from 'wampy';
 
+
+/*Redux */
+
+import { connect } from 'react-redux'
+import {showMessageAction} from './../actions/system-actions';
+
 const labelStyles = {
 
     underlineStyle: {
@@ -28,7 +34,7 @@ const labelStyles = {
 
 };
 
-export default class ServerConnector extends React.Component {
+class ServerConnector extends React.Component {
 
     constructor(props) {
         super(props);
@@ -58,10 +64,9 @@ export default class ServerConnector extends React.Component {
 
         var client = new Wampy(this.state.serverUrl, {
             onConnect: () => {
-
-                this.props.dispalyMessage('Connected to server');
-
-                client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.updateStatus(name); } });
+               
+                client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.updateStatus(name); 
+                this.props.onServerConnected(name);} });
 
                 client.subscribe('cncData', (cncData) => {
 
@@ -89,3 +94,19 @@ export default class ServerConnector extends React.Component {
     }
 
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onServerConnected: (serverName) => {
+        dispatch(showMessageAction(`Successfully connected to ${serverName}`));
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+   
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ServerConnector);
