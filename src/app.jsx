@@ -10,10 +10,10 @@ import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 
 
-import {systemReducer} from './reducers/system-reducer';
+import {appReducer} from './reducers/app-reducer';
 import {serverReducer} from './reducers/server-reducer';
 
-let store = createStore(combineReducers({system :systemReducer,server : serverReducer}));
+let store = createStore(combineReducers({app :appReducer,server : serverReducer}));
 
 ReactDom.render(
     <Provider store={store}>

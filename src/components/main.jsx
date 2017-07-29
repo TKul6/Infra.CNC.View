@@ -19,7 +19,7 @@ import ApplicationBar from './applicationBar.jsx';
 import { connect } from 'react-redux';
 
 /*Actions*/
-import * as systemActions from './../actions/system-actions';
+import * as appActions from './../actions/app-actions';
 
 const muiTheme = getMuiTheme({})
 
@@ -87,14 +87,14 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        snackbar: state.system.snackbar,
+        snackbar: state.app.snackbar,
         serverName : state.server.serverName
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        hideSnackbar: (reason) => dispatch(systemActions.hideMessageAction())
+        hideSnackbar: (reason) => dispatch(appActions.hideMessageAction())
     }
 }
 

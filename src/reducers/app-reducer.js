@@ -1,4 +1,4 @@
-import * as systemActions from './../actions/system-actions'
+import * as appActions from './../actions/app-actions'
 const initialState = {
     snackbar: {
         isOpen: false,
@@ -6,20 +6,20 @@ const initialState = {
     },
 }
 
-export function systemReducer(state = initialState, action) {
+export function appReducer(state = initialState, action) {
 
     switch (action.type) {
-        case systemActions.SHOW_MESSAGE:
+        case appActions.SHOW_MESSAGE:
             {
                 return Object.assign({}, state, { snackbar: { isOpen: true, message: action.payload } });
                 break;
             }
-        case systemActions.HIDE_MESSAGE:
+        case appActions.HIDE_MESSAGE:
             {
                 return Object.assign({}, state, { snackbar: { isOpen: false, message: '' } });
                 break;
             }
-        case systemActions.RENAME_SERVER_NAME:
+        case appActions.RENAME_SERVER_NAME:
             {
                 return Object.assign({}, state, { serverName: action.payload });
                 break;
