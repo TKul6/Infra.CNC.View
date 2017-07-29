@@ -15,13 +15,17 @@ import TreeView from './treeView.jsx';
 import * as tempDataSource from '../api.js';
 import ApplicationBar from './applicationBar.jsx';
 
+/*Redux */
+
+
+import { connect } from 'react-redux'
 
 const muiTheme = getMuiTheme({})
 
 
 
-
-export default class Main extends React.Component {
+ 
+ class Main extends React.Component {
 
     constructor(props) {
         super(props)
@@ -68,9 +72,12 @@ export default class Main extends React.Component {
         this.setState({ treeData: newTree });
     }
 
-    render() {
 
-        return (<MuiThemeProvider muiTheme={muiTheme}>
+    render() {
+console.log(this.props);
+        return (
+            
+                    <MuiThemeProvider muiTheme={muiTheme}>
             <div>
                 <ApplicationBar displayMessage={this.displayMessage} updateStatus={this.updateStatus} updateTree={this.updateTree}  treeData={this.state.treeData}/>
                 <div className='container'>
@@ -81,13 +88,31 @@ export default class Main extends React.Component {
                 </div>
                 <div>
                     <Snackbar
-                        open={this.state.snackbar.isOpen}
-                        message={this.state.snackbar.message}
+                        open={this.props.snackbar.isOpen}
+                        message={this.props.snackbar.message}
                         autoHideDuration={4000}
                         onRequestClose={this.closeSnackbar}
                     />
                 </div>
             </div>
-        </MuiThemeProvider>)
-    }
+        </MuiThemeProvider>
+        )}
+
 }
+
+const mapStateToProps = state => {
+
+console.log(state);
+
+  return {
+    snackbar: state.snackbar
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
+

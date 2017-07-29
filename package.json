@@ -23,6 +23,7 @@
     "react-dom": "^15.3.2",
     "react-redux": "^5.0.5",
     "react-treebeard": "^1.1.4",
+    "redux": "^3.7.2",
     "wampy": "^4.0.0",
     "when": "^3.7.7"
   },
