@@ -85,7 +85,7 @@ class Main extends React.Component {
                             open={this.props.snackbar.isOpen}
                             message={this.props.snackbar.message}
                             autoHideDuration={4000}
-                            onRequestClose={this.props.closeSnackbar}
+                            onRequestClose={this.props.hideSnackbar}
                         />
                     </div>
                 </div>
@@ -102,7 +102,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        closeSnackbar: (reason) => dispatch(systemActions.hideMessageAction())
+        hideSnackbar: (reason) => dispatch(systemActions.hideMessageAction())
     }
 }
 
