@@ -46,8 +46,6 @@ class ServerConnector extends React.Component {
             serverUrl: 'ws://localhost:4099/api/v1/cnc'
         };
 
-        this.wampClient = null;
-
     }
 
 
@@ -57,19 +55,20 @@ class ServerConnector extends React.Component {
 
     connectToServer(e) {
 
-        if (!this.wampClient) {
-            //Todo disconnect
+        if (this.wampClient != undefined) {
+            this.wampClient.disconnect();
+            this.props.onDisconnect(this.props.serverName);
         }
 
         console.log('connecting to WAMP server ...');
 
-        var client = new Wampy(this.state.serverUrl, {
+        this.wampClient = new Wampy(this.state.serverUrl, {
             onConnect: () => {
                
-                client.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.onServerNameChanged(name); 
+                this.wampClient.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.onServerNameChanged(name); 
                 this.props.onServerConnected(name);} });
 
-                client.subscribe('cncData', (cncData) => {
+                this.wampClient.subscribe('cncData', (cncData) => {
 
                     this.props.onTreeDataRecieved(cncData[0]);
                 });
@@ -102,14 +101,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onServerNameChanged: (serverName) =>{
         dispatch(renameServerAction(serverName));
     },
-    onTreeDataRecieved : (data) => dispatch(treeDataUpdatedAction(data))
+    onTreeDataRecieved : (data) => dispatch(treeDataUpdatedAction(data)),
+    onDisconnect : serverName => dispatch(showMessageAction(`Disconnected from ${serverName}`))
     
   }
 }
 
 const mapStateToProps = state => {
   return {
-   
+   serverName : state.server.serverName
   }
 }
 
