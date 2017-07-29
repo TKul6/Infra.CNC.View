@@ -74,11 +74,11 @@ class TreeView extends React.Component {
     }
 
     copyPath(e) {
-        var path = filters.getPath(this.props.data, this.state.selectedNode);
+        var path = filters.getPath(this.props.tree, this.state.selectedNode);
 
         copy(path);
 
-        this.props.displayMessage(this.state.selectedNode.name + ' was copied');
+        this.props.showMessage(this.state.selectedNode.name + ' was copied');
     }
 
     getNodeId(node, idPrefix) {
@@ -146,11 +146,11 @@ const mapStateToProps = state => {
     }
 }
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         showMessage: (message) => dispatch(appActions.showMessageAction(message))
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        showMessage: (message) => dispatch(appActions.showMessageAction(message))
+    }
+}
 
 
-export default connect(mapStateToProps)(TreeView)
+export default connect(mapStateToProps,mapDispatchToProps)(TreeView)
