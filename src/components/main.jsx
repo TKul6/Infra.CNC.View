@@ -34,26 +34,19 @@ class Main extends React.Component {
             },
             checks: [],
          }
-        this.displayMessage = this.displayMessage.bind(this);
-    }
-
-    displayMessage(message) {
-
-        if (message) {
-             this.setState({ snackbar: { isOpen: true, message: message } });
         }
-    }
+
     render() {
         return (
 
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
-                    <ApplicationBar displayMessage={this.displayMessage} />
+                    <ApplicationBar />
                     <div className='container'>
                         <h1>{this.props.serverName}</h1>
                     </div>
                     <div>
-                        <TreeView displayMessage={this.displayMessage} />
+                        <TreeView />
                     </div>
                     <div>
                         <Snackbar
