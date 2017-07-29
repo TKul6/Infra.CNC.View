@@ -40,6 +40,7 @@ class TreeView extends React.Component {
 
     constructor(props) {
         super(props);
+        this.toggleBookeeper = new Map();
         this.state = { searchPaese: '', selectedNode: null };
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
@@ -62,6 +63,9 @@ class TreeView extends React.Component {
     }
 
     onToggle(node, toggled) {
+
+        this.toggleBookeeper[node.id] = toggled;
+
         if (this.state.cursor) { this.state.cursor.active = false; }
         node.active = true;
         this.setState({ selectedNode: node });
@@ -78,9 +82,9 @@ class TreeView extends React.Component {
     }
 
     getNodeId(node, idPrefix) {
-        if ( !node.id) {
+        if (!node.id) {
             if (idPrefix) {
-               return `${idPrefix}/${node.name}`;
+                return `${idPrefix}/${node.name}`;
             }
             else {
                 return node.name;
@@ -92,7 +96,7 @@ class TreeView extends React.Component {
     normalizeTree(node, idPrefix) {
 
         node.id = this.getNodeId(node, idPrefix);
-
+        node.toggled = this.toggleBookeeper[node.id] === true;
         if (Array.isArray(node.value)) {
             node.name = node.name;
             node.children = node.value
