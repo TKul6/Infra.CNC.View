@@ -87,8 +87,8 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        snackbar: state.snackbar,
-        serverName : state.serverName
+        snackbar: state.system.snackbar,
+        serverName : state.server.serverName
     }
 }
 

@@ -7,10 +7,14 @@ import ReactDom from 'react-dom';
 import Main from './components/main.jsx';
 
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import {systemReducer} from './reducers/system-reducer';
+import {createStore, combineReducers} from 'redux';
 
-let store = createStore(systemReducer);
+
+import {systemReducer} from './reducers/system-reducer';
+import {serverReducer} from './reducers/server-reducer';
+
+let store = createStore(combineReducers({system :systemReducer,server : serverReducer}));
+
 ReactDom.render(
     <Provider store={store}>
         <Main />

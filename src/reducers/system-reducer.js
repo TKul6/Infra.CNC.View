@@ -4,7 +4,6 @@ const initialState = {
         isOpen: false,
         message: ''
     },
-    serverName: 'No Server Name'
 }
 
 export function systemReducer(state = initialState, action) {

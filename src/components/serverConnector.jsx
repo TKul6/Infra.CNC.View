@@ -17,7 +17,8 @@ import Wampy from 'wampy';
 /*Redux */
 
 import { connect } from 'react-redux'
-import {showMessageAction, renameServerAction} from './../actions/system-actions';
+import {showMessageAction} from './../actions/system-actions';
+import {renameServerAction} from './../actions/server-actions';
 
 const labelStyles = {
 
