@@ -41,26 +41,19 @@ class TreeView extends React.Component {
     constructor(props) {
         super(props);
         this.toggleBookeeper = new Map();
-        this.state = { searchPaese: '', selectedNode: null };
+        this.state = { filter: '', 
+        selectedNode: null };
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
         this.copyPath = this.copyPath.bind(this);
         this.normalizeTree = this.normalizeTree.bind(this);
         this.getNodeId = this.getNodeId.bind(this);
+        this.buildTree = this.buildTree.bind(this);
     }
 
     onFilter(e) {
-        this.setState({ searchPaese: e.target.value });
-        const filter = e.target.value.trim();
-        if (filter) {
-            var filtered = filters.filterTree(this.props.data, filter);
-            filtered = filters.expandFilteredNodes(filtered, filter);
-            this.setState({ data: filtered });
-        }
-        else {
-            this.setState({ data: this.props.data })
-        }
-    }
+        this.setState({ filter: e.target.value });
+       }
 
     onToggle(node, toggled) {
 
@@ -93,6 +86,18 @@ class TreeView extends React.Component {
         return node.id;
     }
 
+buildTree(node,idPrefix){
+    var tree = this.normalizeTree(node,idPrefix);
+
+    if(this.state.filter){
+        var filtered = filters.filterTree(this.props.tree, this.state.filter);
+            filtered = filters.expandFilteredNodes(filtered, this.state.filter);
+        tree = filtered;
+    }
+
+    return tree;
+}
+
     normalizeTree(node, idPrefix) {
 
         node.id = this.getNodeId(node, idPrefix);
@@ -119,7 +124,7 @@ class TreeView extends React.Component {
 
                 <div>
                     <TextField hintText=''
-                        floatingLabelText='Search' value={this.state.searchPaese}
+                        floatingLabelText='Search' value={this.state.filter}
                         onChange={this.onFilter} />
                 </div>
                 <div>
@@ -128,7 +133,7 @@ class TreeView extends React.Component {
                     </IconButton>
                 </div>
 
-                <Treebeard data={this.normalizeTree(this.props.tree, '')}
+                <Treebeard data={this.buildTree(this.props.tree, '')}
                     onToggle={this.onToggle}
                     style={Style}
                     decorators={decorators} />
