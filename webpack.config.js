@@ -3,11 +3,11 @@ var path = require('path');
 var webpack = require('webpack');
 var  HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const OUPUT_PATH = path.resolve(__dirname,'bin', 'Scripts');
+const BIN_PATH = path.resolve(__dirname,'bin');
 
 module.exports = {
   entry: './src/app.jsx',
-  output: { path: OUPUT_PATH, filename: 'bundle.js' },
+  output: { path: BIN_PATH, filename: 'Scripts/bundle.js' },
   module: {
     loaders: [
       {
@@ -30,7 +30,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Infra CNC View',
-      filename: './../index.html',
+      filename: './index.html',
       template: 'src/index.html'
     })
   ]
