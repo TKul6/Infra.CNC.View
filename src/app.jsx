@@ -13,6 +13,8 @@ import {createStore, combineReducers} from 'redux';
 import {appReducer} from './reducers/app-reducer';
 import {serverReducer} from './reducers/server-reducer';
 
+import css from './style/main.css';
+
 let store = createStore(combineReducers({app :appReducer,server : serverReducer}));
 
 ReactDom.render(
