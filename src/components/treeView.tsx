@@ -9,7 +9,6 @@ import IconMenu from 'material-ui/IconMenu';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import * as filters from './filter';
-//import {copy} from 'copy-to-clipboard';
 import { connect } from 'react-redux';
 import {TreeNode} from './../models/tree-node'
 
