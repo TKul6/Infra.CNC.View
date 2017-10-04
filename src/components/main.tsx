@@ -1,39 +1,41 @@
 /**
  * Created by Tomer on 12/10/2016.
  */
-import React from 'react';
-
+import * as React from 'react';
+import {Dispatch} from 'redux'
 /*Material UI dependencies */
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MuiThemeProvider, lightBaseTheme} from 'material-ui/styles';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { deepOrange500 } from 'material-ui/styles/colors';
 import LightTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Snackbar from 'material-ui/Snackbar';
 
+import {SnackbarState} from './../core/state/snackbar-state'
+import {State} from './../core/state/state'
 /*Local depenencies */
-import TreeView from './treeView.jsx';
-import * as tempDataSource from '../api.js';
-import ApplicationBar from './applicationBar.jsx';
+import TreeView from './treeView';
+
+import ApplicationBar from './applicationBar';
 
 /*Redux */
 import { connect } from 'react-redux';
 
 /*Actions*/
-import * as appActions from './../actions/app-actions';
+import * as appActions from './../core/state/actions/app-actions';
 
-const muiTheme = getMuiTheme({})
+const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
-class Main extends React.Component {
 
-    constructor(props) {
-        super(props)
-        }
+interface MainProps  {serverName : string,
+                  snackbar : SnackbarState, 
+                  hideSnackbar : () => void}
+
+class Main extends React.Component<any,MainProps> {
 
     render() {
         return (
-
-            <MuiThemeProvider muiTheme={muiTheme}>
-                <div>
+               <MuiThemeProvider muiTheme={lightMuiTheme}>
+                  <div>
                     <ApplicationBar />
                     <div className='container'>
                         <h1>{this.props.serverName}</h1>
@@ -50,22 +52,22 @@ class Main extends React.Component {
                         />
                     </div>
                 </div>
-            </MuiThemeProvider>
+                   </MuiThemeProvider>
         )
     }
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state : State) => {
     return {
         snackbar: state.app.snackbar,
         serverName: state.server.serverName
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch : Dispatch<State>)  => {
     return {
-        hideSnackbar: (reason) => dispatch(appActions.hideMessageAction())
+        hideSnackbar: (reason : string) => dispatch(appActions.hideMessageAction())
     }
 }
 

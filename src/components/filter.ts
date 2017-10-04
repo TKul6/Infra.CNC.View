@@ -1,18 +1,20 @@
 'use strict';
+import {TreeNode} from './../models/tree-node'
+
 
 // Helper functions for filtering
-export const defaultMatcher = (filterText, node) => {
+export const defaultMatcher = (filterText: string, node: TreeNode<string>) => {
     return node.name.toLowerCase().indexOf(filterText.toLowerCase()) !== -1;
 };
 
-export const findNode = (node, filter, matcher) => {
+export const findNode = (node: TreeNode<string>, filter: string, matcher: any) : boolean =>  {
     return matcher(filter, node) || // i match
         (node.children && // or i have decendents and one of them match
         node.children.length &&
         !!node.children.find(child => findNode(child, filter, matcher)));
 };
 
-export const filterTree = (node, filter, matcher = defaultMatcher) => {
+export const filterTree = (node: TreeNode<string>, filter: string, matcher = defaultMatcher): TreeNode<string> => {
     // If im an exact match then all my children get to stay
     if(matcher(filter, node) || !node.children){ return node; }
     // If not then only keep the ones that match or have matching descendants
@@ -22,7 +24,7 @@ export const filterTree = (node, filter, matcher = defaultMatcher) => {
     return Object.assign({}, node, { children: filtered });
 };
 
-export const expandFilteredNodes = (node, filter, matcher = defaultMatcher) => {
+export const expandFilteredNodes = (node: TreeNode<string>, filter: string, matcher = defaultMatcher) : TreeNode<string> =>  {
     let children = node.children;
     if(!children || children.length === 0){
       return Object.assign({}, node, { toggled: false });
@@ -42,7 +44,7 @@ export const expandFilteredNodes = (node, filter, matcher = defaultMatcher) => {
 };
 
 // Getting the XPath of the node in the tree
-export const getPath = function(root, node, path){
+export const getPath = (root: TreeNode<string>, node: TreeNode<string>, path: string) : string => {
 
         if (root === node) {
             return path + '/' + node.name;

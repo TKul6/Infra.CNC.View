@@ -1,22 +1,33 @@
 /**
  * Created by Tomer on 15/10/2016.
  */
-import React from 'react';
-import { Treebeard, decorators } from 'react-treebeard';
-import Style from '../style/treeViewStyle.js';
+import * as  React from 'react';
+import Style from './../style/treeview-style';
 import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 import IconMenu from 'material-ui/IconMenu';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import * as filters from './filter';
-import copy from 'copy-to-clipboard';
+//import {copy} from 'copy-to-clipboard';
 import { connect } from 'react-redux';
+import {TreeNode} from './../models/tree-node'
+
+let copy = require('copy-to-clipboard');
+
+let Treebeard = require('react-treebeard').Treebeard;
+
+let decorators = require('react-treebeard').decorators;
 
 /*Actions*/
-import * as appActions from './../actions/app-actions';
+import * as appActions from './../core/state/actions/app-actions';
 
-decorators.Header = function (props) {
+
+/*Redux*/
+import {State} from './../core/state/state'
+import {Dispatch} from 'redux'
+
+decorators.Header = function (props: any) {
 
     const style = props.style;
 
@@ -36,13 +47,21 @@ decorators.Header = function (props) {
         </div>);
 
 };
-class TreeView extends React.Component {
 
-    constructor(props) {
+ export interface TreeState {filter: string, selectedNode : TreeNode<string>, cursor: TreeNode<string>}
+
+
+class TreeView extends React.Component<any,TreeState>{
+
+private toggleBookeeper : Map<string,boolean>;
+
+    constructor(props : any) {
         super(props);
-        this.toggleBookeeper = new Map();
+        this.toggleBookeeper = new Map<string,any>();
         this.state = { filter: '', 
-        selectedNode: null };
+        selectedNode: null,
+    cursor : null,
+};
         this.onToggle = this.onToggle.bind(this);
         this.onFilter = this.onFilter.bind(this);
         this.copyPath = this.copyPath.bind(this);
@@ -51,13 +70,13 @@ class TreeView extends React.Component {
         this.buildTree = this.buildTree.bind(this);
     }
 
-    onFilter(e) {
+    onFilter(e : any) {
         this.setState({ filter: e.target.value });
        }
 
-    onToggle(node, toggled) {
+    onToggle(node: TreeNode<string>, toggled : boolean) {
 
-        this.toggleBookeeper[node.id] = toggled;
+        this.toggleBookeeper.set(node.id, toggled);
 
         if (this.state.cursor) { this.state.cursor.active = false; }
         node.active = true;
@@ -66,15 +85,15 @@ class TreeView extends React.Component {
         this.setState({ cursor: node });
     }
 
-    copyPath(e) {
-        var path = filters.getPath(this.props.tree, this.state.selectedNode);
+    copyPath(e: any) {
+        let path :string = filters.getPath(this.props.tree, this.state.selectedNode,'');
 
         copy(path);
 
         this.props.showMessage(this.state.selectedNode.name + ' was copied');
     }
 
-    getNodeId(node, idPrefix) {
+    getNodeId(node: any, idPrefix: string) {
         if (!node.id) {
             if (idPrefix) {
                 return `${idPrefix}/${node.name}`;
@@ -86,7 +105,7 @@ class TreeView extends React.Component {
         return node.id;
     }
 
-buildTree(node,idPrefix){
+buildTree(node: any, idPrefix: string){
     var tree = this.normalizeTree(node,idPrefix);
 
     if(this.state.filter){
@@ -98,15 +117,15 @@ buildTree(node,idPrefix){
     return tree;
 }
 
-    normalizeTree(node, idPrefix) {
+    normalizeTree(node: any, idPrefix: string) {
 
         node.id = this.getNodeId(node, idPrefix);
-        node.toggled = this.toggleBookeeper[node.id] === true;
+        node.toggled = this.toggleBookeeper.get(node.id) === true;
         if (Array.isArray(node.value)) {
             node.name = node.name;
             node.children = node.value
 
-            node.children.forEach(item => this.normalizeTree(item, node.id));
+            node.children.forEach((item: any) => this.normalizeTree(item, node.id));
         }
 
         else if (!node.name.includes('=')) {
@@ -143,7 +162,7 @@ buildTree(node,idPrefix){
     }
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state : State) => {
 
 
     return {
@@ -151,11 +170,12 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch : Dispatch<State>) => {
     return {
-        showMessage: (message) => dispatch(appActions.showMessageAction(message))
+        showMessage: (message : string) => dispatch(appActions.showMessageAction(message))
     }
 }
 
+  
 
-export default connect(mapStateToProps,mapDispatchToProps)(TreeView)
+export default connect(mapStateToProps,mapDispatchToProps)(TreeView);

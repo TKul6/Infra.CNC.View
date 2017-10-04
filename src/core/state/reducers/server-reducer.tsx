@@ -1,22 +1,30 @@
+import {Action} from './../../../ext/action'
+
 import * as serverActions from './../actions/server-actions'
-import * as tempDataSource from './../api.js';
-const initialState = {
-    serverName: 'No Server Name',
-    treeData: tempDataSource
+
+
+export interface State {
+    serverName: string,
+    treeData : Object
 }
 
-export function serverReducer(state = initialState, action) {
+
+let initialState : State = {
+    serverName: 'No Server Name',
+    treeData: {name: 'No data', value : 'No Data'}
+}
+
+export function serverReducer(state = initialState, action : Action) {
 
     switch (action.type) {
         case serverActions.RENAME_SERVER_NAME:
             {
                 return Object.assign({}, state, { serverName: action.payload });
-                break;
+                
             }
         case serverActions.TREE_DATA_UPDATED:{
 
                 return Object.assign({}, state, { treeData: action.payload });
-                break;
         }
     }
     return state;

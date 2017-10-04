@@ -1,6 +1,6 @@
 
 /*React dependencies */
-import React from 'react';
+import * as  React from 'react';
 
 
 /*Material UI depenencies */
@@ -11,14 +11,17 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 
 /* Wamp dependencies */
-import Wampy from 'wampy';
+import * as Wampy from 'wampy';
 
 
 /*Redux */
-
+import {Dispatch} from 'redux'
 import { connect } from 'react-redux'
-import {showMessageAction} from './../actions/app-actions';
-import {renameServerAction, treeDataUpdatedAction} from './../actions/server-actions';
+import {showMessageAction} from './../core/state/actions/app-actions';
+import {renameServerAction, treeDataUpdatedAction} from './../core/state/actions/server-actions';
+
+
+import {State} from './../core/state/state'
 
 const labelStyles = {
 
@@ -35,9 +38,15 @@ const labelStyles = {
 
 };
 
-class ServerConnector extends React.Component {
+export interface ServerConnectorState {serverUrl: string}
 
-    constructor(props) {
+
+
+class ServerConnector extends React.Component<any,ServerConnectorState> {
+
+private wampClient : Wampy;
+
+    constructor(props : any) {
         super(props);
 
         this.connectToServer = this.connectToServer.bind(this);
@@ -49,11 +58,11 @@ class ServerConnector extends React.Component {
     }
 
 
-    updateServerUrl(e) {
-        this.setState({ serverUrl: e.target.value });
+    updateServerUrl(e : object, url : string) {
+        this.setState({ serverUrl: url });
     }
 
-    connectToServer(e) {
+    connectToServer(e : any) {
 
         if (this.wampClient != undefined) {
             this.wampClient.disconnect();
@@ -65,10 +74,10 @@ class ServerConnector extends React.Component {
         this.wampClient = new Wampy(this.state.serverUrl, {
             onConnect: () => {
                
-                this.wampClient.call('infra.cnc.serverName', null, { onSuccess: (name) => { this.props.onServerNameChanged(name); 
+                this.wampClient.call('infra.cnc.serverName', null, { onSuccess: (name : any) => { this.props.onServerNameChanged(name); 
                 this.props.onServerConnected(name);} });
 
-                this.wampClient.subscribe('cncData', (cncData) => {
+                this.wampClient.subscribe('cncData', (cncData :any) => {
 
                     this.props.onTreeDataRecieved(cncData[0]);
                 });
@@ -93,21 +102,21 @@ class ServerConnector extends React.Component {
 
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch : Dispatch<State>) => {
   return {
-    onServerConnected: (serverName) => {
+    onServerConnected: (serverName :string) => {
         dispatch(showMessageAction(`Successfully connected to ${serverName}`));
     },
-    onServerNameChanged: (serverName) =>{
+    onServerNameChanged: (serverName : string) =>{
         dispatch(renameServerAction(serverName));
     },
-    onTreeDataRecieved : (data) => dispatch(treeDataUpdatedAction(data)),
-    onDisconnect : serverName => dispatch(showMessageAction(`Disconnected from ${serverName}`))
+    onTreeDataRecieved : (data : any) => dispatch(treeDataUpdatedAction(data)),
+    onDisconnect : (serverName : string) => dispatch(showMessageAction(`Disconnected from ${serverName}`))
     
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state : State) => {
   return {
    serverName : state.server.serverName
   }
