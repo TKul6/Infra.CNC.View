@@ -19,27 +19,10 @@ import {Dispatch} from 'redux'
 import { connect } from 'react-redux'
 import {showMessageAction} from './../core/state/actions/app-actions';
 import {renameServerAction, treeDataUpdatedAction} from './../core/state/actions/server-actions';
-
-
 import {State} from './../core/state/state'
 
-const labelStyles = {
-
-    underlineStyle: {
-        borderColor: white,
-    },
-    whiteText: {
-        color: white,
-    },
-    semiWhiteText: {
-        color: teal100,
-    },
-
-
-};
 
 export interface ServerConnectorState {serverUrl: string}
-
 
 
 class ServerConnector extends React.Component<any,ServerConnectorState> {
@@ -54,9 +37,7 @@ private wampClient : Wampy;
         this.state = {
             serverUrl: 'ws://localhost:4099/api/v1/cnc'
         };
-
     }
-
 
     updateServerUrl(e : object, url : string) {
         this.setState({ serverUrl: url });
@@ -123,3 +104,17 @@ const mapStateToProps = (state : State) => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ServerConnector);
+
+const labelStyles = {
+    
+        underlineStyle: {
+            borderColor: white,
+        },
+        whiteText: {
+            color: white,
+        },
+        semiWhiteText: {
+            color: teal100,
+        },
+    };
+    

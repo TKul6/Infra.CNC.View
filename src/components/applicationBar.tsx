@@ -6,14 +6,6 @@ import TextField from 'material-ui/TextField';
 
 import ServerConnector from './serverConnector';
 
-const style = {
-    'background-color': '#1c606b',
-    icon: {
-        'marginTop': '16px'
-    }
-}
-
-
 
 export default class ApplicationBar extends React.Component {
 
@@ -29,4 +21,11 @@ export default class ApplicationBar extends React.Component {
             ;
     }
 
+}
+
+const style = {
+    'background-color': '#1c606b',
+    icon: {
+        'marginTop': '16px'
+    }
 }

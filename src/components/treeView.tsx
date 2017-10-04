@@ -92,7 +92,7 @@ private toggleBookeeper : Map<string,boolean>;
         this.props.showMessage(this.state.selectedNode.name + ' was copied');
     }
 
-    getNodeId(node: any, idPrefix: string) {
+    getNodeId(node: TreeNode<string>, idPrefix: string) {
         if (!node.id) {
             if (idPrefix) {
                 return `${idPrefix}/${node.name}`;
