@@ -3,7 +3,7 @@
  */
 'use strict';
 
-export default {
+export default  {
     tree: {
         base: {
             listStyle: 'none',
