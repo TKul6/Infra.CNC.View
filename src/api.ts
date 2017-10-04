@@ -1,4 +1,4 @@
-var data =
+export default 
     {
         name: 'root',
         value: [
@@ -49,4 +49,3 @@ var data =
             }]
     };
 
-module.exports = data;
