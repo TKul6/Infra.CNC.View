@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import Main from './components/main';
+import Layout from './layout/layout';
 
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
@@ -19,5 +19,5 @@ let store = createStore(combineReducers({app :appReducer,server : serverReducer}
 
 ReactDom.render(
     <Provider store={store}>
-        <Main />
+        <Layout />
     </Provider>,document.getElementById('app'));

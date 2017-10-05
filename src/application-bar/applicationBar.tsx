@@ -4,7 +4,7 @@ import FontIcon from 'material-ui/FontIcon';
 import { blue100, teal100, white, blueGrey900 } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
 
-import ServerConnector from './serverConnector';
+import ServerConnector from './../server-connector/serverConnector';
 
 
 export default class ApplicationBar extends React.Component {
