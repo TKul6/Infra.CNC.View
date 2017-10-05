@@ -1,5 +1,5 @@
 import * as appActions from './../actions/app-actions'
-import {Action} from './../../../ext/action';
+import {Action} from './../action'
 import {SnackbarState} from './../snackbar-state'
 
 export interface AppState {

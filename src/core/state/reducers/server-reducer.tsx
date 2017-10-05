@@ -1,4 +1,4 @@
-import {Action} from './../../../ext/action'
+import {Action} from './../action'
 
 import * as serverActions from './../actions/server-actions'
 

@@ -1,4 +1,4 @@
-import {Action} from './../../../ext/action'
+import {Action} from './../action'
 
 export const RENAME_SERVER_NAME = 'app/server/name/rename'
 export const TREE_DATA_UPDATED = 'app/server/tree/update'

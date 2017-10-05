@@ -1,5 +1,5 @@
 
-import {Action} from './../../../ext/action'
+import {Action} from './../action'
 
 export const SHOW_MESSAGE = 'app/snackbar/show';
 export const HIDE_MESSAGE = 'app/snackbar/hide';
