@@ -1,23 +1,22 @@
-/**
- * Created by Tomer on 12/10/2016.
- */
-
+/*React Dependencies */
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
+
+/*Redux dependencies */
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import { appReducer } from './core/state/reducers/app-reducer';
+import { serverReducer } from './core/state/reducers/server-reducer';
+
 import Layout from './layout/layout';
-
-import {Provider} from 'react-redux';
-import {createStore, combineReducers} from 'redux';
-
-
-import {appReducer} from './core/state/reducers/app-reducer';
-import {serverReducer} from './core/state/reducers/server-reducer';
 
 require('style-loader!./style/main.css');
 
-let store = createStore(combineReducers({app :appReducer,server : serverReducer}));
+import { WampProviderService } from './core/services/wamp-provider.service';
+
+let store = createStore(combineReducers({ app: appReducer, server: serverReducer }));
 
 ReactDom.render(
     <Provider store={store}>
-        <Layout />
-    </Provider>,document.getElementById('app'));
+        <Layout dataProvider={new WampProviderService()} />
+    </Provider>, document.getElementById('app'));
