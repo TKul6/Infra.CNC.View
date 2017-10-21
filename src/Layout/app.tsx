@@ -19,7 +19,7 @@ export class Shell extends React.Component<any, any> {
     render() {
         return (
             <Provider store={store}>
-            <Layout dataProvider={new WampProviderService()} />
-        </Provider>);
+                <Layout />
+            </Provider>);
     }
 }

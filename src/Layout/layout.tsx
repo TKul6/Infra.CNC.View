@@ -18,7 +18,6 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux'
 import * as appActions from './../core/state/actions/app-actions';
 import { State } from './../core/state/state'
-import { IDataProviderService } from './../core/interfaces/data-provider.service';
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
@@ -26,8 +25,8 @@ const lightMuiTheme = getMuiTheme(lightBaseTheme);
 interface LayoutProps {
     serverName: string,
     snackbar: SnackbarState,
-    hideSnackbar: () => void,
-    dataProvider?: IDataProviderService
+    hideSnackbar: (reason: string) => any,
+
 }
 
 class Layout extends React.Component<LayoutProps, any> {
@@ -36,7 +35,7 @@ class Layout extends React.Component<LayoutProps, any> {
         return (
             <MuiThemeProvider muiTheme={lightMuiTheme}>
                 <div>
-                    <ApplicationBar dataProvider={this.props.dataProvider} />
+                    <ApplicationBar />
                     <div className='container'>
                         <h1>{this.props.serverName}</h1>
                     </div>

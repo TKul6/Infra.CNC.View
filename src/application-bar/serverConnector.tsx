@@ -10,9 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 
-
+/* DI */
 import { IDataProviderService } from './../core/interfaces/data-provider.service';
-
+import { DependencyInjectionProps } from './../core/interfaces/dependency-injection-props'
 
 /*Redux */
 import { Dispatch } from 'redux'
@@ -24,13 +24,12 @@ import { State } from './../core/state/state'
 
 interface ServerConnectorState { serverUrl: string }
 
-interface ServerConnectorProps {
+interface ServerConnectorProps extends DependencyInjectionProps {
     serverName: string,
-    dataProvider?: IDataProviderService,
     onServerConnected: (name: string) => void,
     onServerNameChanged: (name: string) => void,
     onTreeDataRecieved: (data: any) => void,
-    onDisconnect: (serverName: string) => void
+    onDisconnect: (serverName: string) => void,
 }
 
 class ServerConnector extends React.Component<ServerConnectorProps, ServerConnectorState> {
@@ -51,7 +50,7 @@ class ServerConnector extends React.Component<ServerConnectorProps, ServerConnec
     }
 
     async connectToServer(e: any) {
-        const service: IDataProviderService = this.props.dataProvider;
+        const service: IDataProviderService = this.props.di('dataProvider');
 
         if (service.isConnected()) {
             await service.disconnect();

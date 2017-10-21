@@ -6,7 +6,6 @@ import TextField from 'material-ui/TextField';
 
 import ServerConnector from './serverConnector';
 
-
 export default class ApplicationBar extends React.Component {
 
     render() {
@@ -24,7 +23,7 @@ export default class ApplicationBar extends React.Component {
 }
 
 const style = {
-    'background-color': '#1c606b',
+    'backgroundColor': '#1c606b',
     icon: {
         'marginTop': '16px'
     }
